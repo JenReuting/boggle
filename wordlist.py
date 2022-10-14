@@ -36,13 +36,9 @@ class WordList:
             True
 
             Checking if word is in self.words
-            >>> wl = WordList("test_dictionary.txt")
             >>> wl.check_word('BIRD')
             False
-
         """
-
-
 
         return word in self.words
 

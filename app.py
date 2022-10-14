@@ -1,6 +1,5 @@
 from flask import Flask, request, render_template, jsonify
 from uuid import uuid4
-
 from boggle import BoggleGame
 
 app = Flask(__name__)
@@ -20,10 +19,10 @@ def homepage():
 @app.post("/api/new-game")
 def new_game():
     """Start a new game and return JSON: {game_id, board}."""
-
     # get a unique string id for the board we're creating
     game_id = str(uuid4())
     game = BoggleGame()
     games[game_id] = game
+    game_info = {"gameId": game_id, "board": game.board}
 
-    return {"gameId": "need-real-id", "board": "need-real-board"}
+    return jsonify(game_info)
