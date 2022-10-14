@@ -42,3 +42,12 @@ class BoggleAppTestCase(TestCase):
 
             # checking if the board game is in the global games dictionary
             self.assertTrue(json_data["gameId"] in games)
+
+            # check if typeof game_id == string
+            self.assertTrue(type(json_data["gameId"]) == str)
+
+            # check if board is comprised of list of lists
+            self.assertTrue(any(isinstance(
+                sub_list, list) for sub_list in json_data["board"]))
+
+
