@@ -35,18 +35,10 @@ class BoggleAppTestCase(TestCase):
         """Test starting a new game."""
 
         with self.client as client:
-            response = client.post(
-                '/api/new-game'
-            )
+            response = client.post('/api/new-game')
 
-            json_data = response.get_data(as_text=True)
-            print(json.loads(json_data), "JSON LOADS")
-
-            # returns true if json_data is JSON
-            self.assertTrue(json.loads(json_data))
-
-            # converting to python dictionary
-            game_info = json.loads(json_data)
+            # json_data = python dictionary
+            json_data = response.get_json()
 
             # checking if the board game is in the global games dictionary
-            self.assertTrue(game_info["gameId"] in games)
+            self.assertTrue(json_data["gameId"] in games)
