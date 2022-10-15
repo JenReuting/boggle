@@ -28,8 +28,13 @@ def new_game():
 
     return jsonify(game_info)
 
+
 @app.post("/api/score-word")
 def score_word():
+    """This function accepts two parameters: gameId and word.
+    The function will check if it is a valid word and if the
+    word is on the board and return JSON indicating the
+    results of the check"""
 
     request_data = request.json
     word = request_data["word"]

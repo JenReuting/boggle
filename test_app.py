@@ -1,7 +1,8 @@
 from unittest import TestCase
 
-from app import app, games
+from app import app, games, new_game
 import json
+
 
 # Make Flask errors be real errors, not HTML pages with error info
 app.config['TESTING'] = True
@@ -50,4 +51,25 @@ class BoggleAppTestCase(TestCase):
             self.assertTrue(any(isinstance(
                 sub_list, list) for sub_list in json_data["board"]))
 
+    def test_score_word(self):
+        """Testing word validation when a new word is submitted"""
+        # CREATING NEW GAME TO GET A NEW GAME ID
+        game_info_json = new_game()
+        # converting new game to python dictionary
+        game_info = json.loads(game_info_json)
 
+        with self.client as client:
+            response = client.post(
+                '/api/score-word', data={"word": "BAR", "gameId": game_info["gameId"]})
+            json_response = response.get_json()  # THIS IS THE SERVER'S RESPONSE TO BROWSER
+            game_id = game_info["gameId"]
+            print(game_id, "<------ GAME IDDDDDD")
+            games[game_id].board = [
+                ["1", "1", "1", "1", "1"],
+                ["1", "1", "1", "1", "1"],
+                ["B", "1", "1", "1", "1"],
+                ["A", "1", "1", "1", "1"],
+                ["R", "1", "1", "1", "1"]
+            ]
+
+            self.assertEqual({"result": "ok"}, json_response)
